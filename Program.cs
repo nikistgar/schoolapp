@@ -20,10 +20,24 @@ public class Global
     {
         path = Path.GetFullPath(".");
     }
-    public void directories()
+    public void directorieswf()
     {
-        Directory.CreateDirectory(path + "\\Algebra");
-        Directory.CreateDirectory(path + "\\Geometry");
+        if (!Directory.Exists(path + "\\Algebra"))
+        {
+            Directory.CreateDirectory(path + "\\Algebra");
+        }
+        if (!Directory.Exists(path + "\\Geometry"))
+        {
+            Directory.CreateDirectory(path + "\\Geometry");
+        }
+        if (!File.Exists(path + "\\Algebra\\Algebra_list.txt"))
+        {
+            File.Create(path + "\\Algebra\\Algebra_list.txt").Close();
+        }
+        if (!File.Exists(path + "\\Geometry\\Geometry_list.txt"))
+        {
+            File.Create(path + "\\Geometry\\Geometry_list.txt").Close();
+        }
     }
     public void introduction()
     {
@@ -91,7 +105,10 @@ public class Global
         adm_func = Console.ReadLine();
         if (adm_func == "1")
         {
-            
+            using(StreamWriter admadd = new StreamWriter(path + "\\Algebra\\Algebra_list.txt",false))
+            {
+                admadd.WriteLine("sdfsdf");
+            }
         }
         else if(adm_func == "2")
         {
@@ -124,7 +141,7 @@ namespace Chezahuiny
         {
             Global lessons = new Global();
             lessons.getpath();
-            lessons.directories();
+            lessons.directorieswf();
             lessons.introduction();
             lessons.introduce();
             lessons.select_lessonType();
