@@ -15,7 +15,7 @@ public class Global
     private string lesson;
     private string lessonWhich;
     private string adm_func;
-    private string pass = "769153";
+    private string pass = "769151";
     public void getpath()
     {
         path = Path.GetFullPath(".");
