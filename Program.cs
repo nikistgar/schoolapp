@@ -14,7 +14,13 @@ public class Global
     private string path;
     private string lesson;
     private string lessonWhich;
+    private string lessonWhichadm;
     private string adm_func;
+    private string Testnameadd;
+    private string Testnameremove;
+    private string admpath;
+    private string admlist;
+    private string admlesson;
     private string pass = "769151";
     public void getpath()
     {
@@ -67,6 +73,24 @@ public class Global
             }
         }
     }
+    public void line_delete(string filen, string rstr)
+    {
+        string tempFile = Path.GetTempFileName();
+
+        using (var sr = new StreamReader("file.txt"))
+        using (var sw = new StreamWriter(tempFile))
+        {
+            string liner;
+            while ((liner = sr.ReadLine()) != null)
+            {
+                if (liner != rstr)
+                    sw.WriteLine(liner);
+            }
+        }
+
+        File.Delete(filen);
+        File.Move(tempFile, filen);
+    }
     public void introduction()
     {
         Console.WriteLine("Programm created by Nikist,Asembly,Luci \n" +
@@ -77,7 +101,7 @@ public class Global
         Console.WriteLine("Введите свои данные одной строкой в формате Фамилия | Имя | Класс");
         try
         {
-            using (StreamWriter student = new StreamWriter(path + "\\Answers.txt", true, Encoding.UTF8))
+            using (var student = new StreamWriter(path + "\\Answers.txt", true, Encoding.UTF8))
             {
                 Console.WriteLine(path);
                 name = Console.ReadLine();
@@ -118,35 +142,104 @@ public class Global
         if (lessonWhich == "3")
         {
             Console.WriteLine("Вход в режим редактирования");
-            adm();
+            admwhich();
         }
         else if (lessonWhich == "1" | lessonWhich ==  "2")
         {
             select_lessonNum();
         }
     }
+    public void admwhich()
+    {
+        Console.WriteLine("Выбирите нужный предмет для изменений (Введите соответствующую цифру):\n" +
+                              "1 - Алгебра\n" +
+                              "2 - Геометрия");
+        admlesson = Console.ReadLine();
+        if (admlesson == "1")
+        {
+            lessonWhichadm = "1";
+            admlessoncheck();
+        }
+        else if (admlesson == "2")
+        {
+            lessonWhichadm = "2";
+            admlessoncheck();
+        }
+        else
+        {
+            Console.WriteLine("Выбирите корректный вариант");
+            admwhich();
+        }
+    }
+    public void admlessoncheck()
+    {
+        if (lessonWhichadm == "1")
+        {
+            admpath = path + "\\Algebra";
+            admlist = "\\Algebra_list.txt";
+            adm();
+        }
+        else if(lessonWhichadm == "2")
+        {
+            admpath = path + "\\Geometry";
+            admlist = "\\Geometry_list.txt";
+            adm();
+        }
+    }
     public void adm()
     {
         Console.WriteLine("Выбирите нужную функцию(Введите соответствующую цифру):\n" +
                           "1 - Добавить тест\n" +
-                          "2 - Удалить тест");
+                          "2 - Удалить тест\n" +
+                          "3 - Вывести список текущих тестов\n" +
+                          "4 - К выбору предметов\n" +
+                          "0 - Выйти из режима редактирования");
         adm_func = Console.ReadLine();
         if (adm_func == "1")
         {
-            using(StreamWriter admadd = new StreamWriter(path + "\\Algebra\\Algebra_list.txt",false))
-            {
-                admadd.WriteLine("sdfsdf");
-            }
+            admadd();
         }
         else if(adm_func == "2")
         {
-
+            admrem();
+        }
+        else if(adm_func == "3")
+        {
+            TestList();
+        }
+        else if (adm_func == "4")
+        {
+            admwhich();
+        }
+        else if(adm_func == "0")
+        {
+            select_lessonType();
         }
         else
         {
             Console.WriteLine("Выбирите корректный вариант");
             adm();
         }
+    }
+    public void admadd()
+    {
+
+    }
+    public void admrem()
+    {
+
+    }
+    public void TestList()
+    {
+        using(var admListAlgebra = new StreamReader(admpath + admlist))
+        {
+            string linel;
+            while ((linel = admListAlgebra.ReadLine()) != null)
+            { 
+                Console.WriteLine(linel);
+            }
+        }
+        adm();
     }
     public void select_lessonNum()
     {
