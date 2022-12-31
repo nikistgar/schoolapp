@@ -22,11 +22,11 @@ public class Global
     private string admlist;
     private string admlesson;
     private string pass = "769151";
-    public void getpath()
+    public void Getpath()
     {
         path = Path.GetFullPath(".");
     }
-    public void directorieswf()
+    public void Directorieswf()
     {
         if (!Directory.Exists(path + "\\Algebra"))
         {
@@ -73,7 +73,7 @@ public class Global
             }
         }
     }
-    public void line_delete(string filen, string rstr)
+    public void Line_delete(string filen, string rstr)
     {
         string tempFile = Path.GetTempFileName();
 
@@ -91,12 +91,12 @@ public class Global
         File.Delete(filen);
         File.Move(tempFile, filen);
     }
-    public void introduction()
+    public void Introduction()
     {
         Console.WriteLine("Programm created by Nikist,Asembly,Luci \n" +
                           "Для уроков алгебры/геометрии Ишмурзины Елены Рашидовны");
     }
-    public void introduce()
+    public void Introduce()
     {
         Console.WriteLine("Введите свои данные одной строкой в формате Фамилия | Имя | Класс");
         try
@@ -113,7 +113,7 @@ public class Global
             Console.WriteLine(ex.Message);
         }
     }
-    public void select_lessonType()
+    public void Select_lessonType()
     {
         Console.WriteLine("Выбирите нужный предмет (Введите соответствующую цифру):\n" +
                           "1 - Алгебра\n" +
@@ -134,22 +134,22 @@ public class Global
         else
         {
             Console.WriteLine("Выбирите корректный вариант");
-            select_lessonType();
+            Select_lessonType();
         }
     }
-    public void pass_check()
+    public void Pass_check()
     {
         if (lessonWhich == "3")
         {
             Console.WriteLine("Вход в режим редактирования");
-            admwhich();
+            Admwhich();
         }
         else if (lessonWhich == "1" | lessonWhich ==  "2")
         {
-            select_lessonNum();
+            Select_lessonNum();
         }
     }
-    public void admwhich()
+    public void Admwhich()
     {
         Console.WriteLine("Выбирите нужный предмет для изменений (Введите соответствующую цифру):\n" +
                               "1 - Алгебра\n" +
@@ -158,35 +158,35 @@ public class Global
         if (admlesson == "1")
         {
             lessonWhichadm = "1";
-            admlessoncheck();
+            Admlessoncheck();
         }
         else if (admlesson == "2")
         {
             lessonWhichadm = "2";
-            admlessoncheck();
+            Admlessoncheck();
         }
         else
         {
             Console.WriteLine("Выбирите корректный вариант");
-            admwhich();
+            Admwhich();
         }
     }
-    public void admlessoncheck()
+    public void Admlessoncheck()
     {
         if (lessonWhichadm == "1")
         {
             admpath = path + "\\Algebra";
             admlist = "\\Algebra_list.txt";
-            adm();
+            Adm();
         }
         else if(lessonWhichadm == "2")
         {
             admpath = path + "\\Geometry";
             admlist = "\\Geometry_list.txt";
-            adm();
+            Adm();
         }
     }
-    public void adm()
+    public void Adm()
     {
         Console.WriteLine("Выбирите нужную функцию(Введите соответствующую цифру):\n" +
                           "1 - Добавить тест\n" +
@@ -197,11 +197,11 @@ public class Global
         adm_func = Console.ReadLine();
         if (adm_func == "1")
         {
-            admadd();
+            Admadd();
         }
         else if(adm_func == "2")
         {
-            admrem();
+            Admrem();
         }
         else if(adm_func == "3")
         {
@@ -209,23 +209,23 @@ public class Global
         }
         else if (adm_func == "4")
         {
-            admwhich();
+            Admwhich();
         }
         else if(adm_func == "0")
         {
-            select_lessonType();
+            Select_lessonType();
         }
         else
         {
             Console.WriteLine("Выбирите корректный вариант");
-            adm();
+            Adm();
         }
     }
-    public void admadd()
+    public void Admadd()
     {
 
     }
-    public void admrem()
+    public void Admrem()
     {
 
     }
@@ -239,9 +239,9 @@ public class Global
                 Console.WriteLine(linel);
             }
         }
-        adm();
+        Adm();
     }
-    public void select_lessonNum()
+    public void Select_lessonNum()
     {
         if (lessonWhich == "1")
         {
@@ -261,12 +261,12 @@ namespace Chezahuiny
         static int Main(string[] args)
         {
             Global lessons = new Global();
-            lessons.getpath();
-            lessons.directorieswf();
-            lessons.introduction();
-            lessons.introduce();
-            lessons.select_lessonType();
-            lessons.pass_check();
+            lessons.Getpath();
+            lessons.Directorieswf();
+            lessons.Introduction();
+            lessons.Introduce();
+            lessons.Select_lessonType();
+            lessons.Pass_check();
             Console.ReadKey();
             return(0);
         }
