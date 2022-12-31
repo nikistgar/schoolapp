@@ -21,7 +21,9 @@ public class Global
     private string admpath;
     private string admlist;
     private string admlesson;
+    private string finaltestname;
     private string pass = "769151";
+    private int admlinecount;
     public void Getpath()
     {
         path = Path.GetFullPath(".");
@@ -44,6 +46,17 @@ public class Global
             try
             {
                 Directory.CreateDirectory(path + "\\Geometry");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        if (!File.Exists(path + "\\Answers.txt"))
+        {
+            try
+            {
+                File.Create(path + "\\Answers.txt").Close();
             }
             catch (Exception ex)
             {
@@ -87,9 +100,19 @@ public class Global
                     sw.WriteLine(liner);
             }
         }
-
         File.Delete(filen);
         File.Move(tempFile, filen);
+    }
+    public void Testcount()
+    {
+        admlinecount = 1;
+        using (var admListcount = new StreamReader(admpath + admlist))
+        {
+            while (admListcount.ReadLine() != null)
+            {
+                admlinecount++;
+            }
+        }
     }
     public void Introduction()
     {
@@ -101,7 +124,7 @@ public class Global
         Console.WriteLine("Введите свои данные одной строкой в формате Фамилия | Имя | Класс");
         try
         {
-            using (var student = new StreamWriter(path + "\\Answers.txt", true, Encoding.UTF8))
+            using (var student = new StreamWriter(path + "\\Answers.txt", true, Encoding.Default))
             {
                 Console.WriteLine(path);
                 name = Console.ReadLine();
@@ -191,8 +214,9 @@ public class Global
         Console.WriteLine("Выбирите нужную функцию(Введите соответствующую цифру):\n" +
                           "1 - Добавить тест\n" +
                           "2 - Удалить тест\n" +
-                          "3 - Вывести список текущих тестов\n" +
-                          "4 - К выбору предметов\n" +
+                          "3 - Просмотр теста\n" +
+                          "4 - Вывести список текущих тестов\n" +
+                          "5 - К выбору предметов\n" +
                           "0 - Выйти из режима редактирования");
         adm_func = Console.ReadLine();
         if (adm_func == "1")
@@ -205,9 +229,13 @@ public class Global
         }
         else if(adm_func == "3")
         {
+
+        }
+        else if(adm_func == "4")
+        {
             TestList();
         }
-        else if (adm_func == "4")
+        else if (adm_func == "5")
         {
             Admwhich();
         }
@@ -223,9 +251,21 @@ public class Global
     }
     public void Admadd()
     {
-
+        Testcount();
+        Console.WriteLine("Введите название нового теста");
+        Testnameadd = Console.ReadLine();
+        finaltestname = admlinecount + " - " + Testnameadd;
+        using (var admadd = new StreamWriter(admpath + admlist,true,Encoding.Default))
+        {
+            admadd.WriteLine(finaltestname);
+            File.Create(admpath + "\\" + finaltestname + ".txt").Close();
+        }
     }
     public void Admrem()
+    {
+
+    }
+    public void Testview()
     {
 
     }
@@ -260,6 +300,8 @@ namespace Chezahuiny
     {
         static int Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.Default;
+            Console.InputEncoding = Encoding.Default;
             Global lessons = new Global();
             lessons.Getpath();
             lessons.Directorieswf();
