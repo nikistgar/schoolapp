@@ -24,19 +24,47 @@ public class Global
     {
         if (!Directory.Exists(path + "\\Algebra"))
         {
-            Directory.CreateDirectory(path + "\\Algebra");
+            try
+            {
+                Directory.CreateDirectory(path + "\\Algebra");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         if (!Directory.Exists(path + "\\Geometry"))
         {
-            Directory.CreateDirectory(path + "\\Geometry");
+            try
+            {
+                Directory.CreateDirectory(path + "\\Geometry");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         if (!File.Exists(path + "\\Algebra\\Algebra_list.txt"))
         {
-            File.Create(path + "\\Algebra\\Algebra_list.txt").Close();
+            try
+            {
+                File.Create(path + "\\Algebra\\Algebra_list.txt").Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         if (!File.Exists(path + "\\Geometry\\Geometry_list.txt"))
         {
-            File.Create(path + "\\Geometry\\Geometry_list.txt").Close();
+            try
+            {
+                File.Create(path + "\\Geometry\\Geometry_list.txt").Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
     public void introduction()
@@ -58,7 +86,7 @@ public class Global
         }
         catch(Exception ex)
         {
-            Console.Write(ex.Message);
+            Console.WriteLine(ex.Message);
         }
     }
     public void select_lessonType()
