@@ -22,6 +22,7 @@ public class Global
     private string admlist;
     private string admlesson;
     private string finaltestname;
+    private string admedit;
     private string pass = "769151";
     private int admlinecount;
     public void Getpath()
@@ -61,14 +62,14 @@ public class Global
         }
         if (!File.Exists(path + "\\Algebra\\Algebra_list.txt"))
         {
-            using (var anscr = new StreamWriter(path + "\\Algebra\\Algebra_list.txt", true, Encoding.UTF8))
+            using (var algcr = new StreamWriter(path + "\\Algebra\\Algebra_list.txt", true, Encoding.UTF8))
             {
 
             }
         }
         if (!File.Exists(path + "\\Geometry\\Algebra_list.txt"))
         {
-            using (var anscr = new StreamWriter(path + "\\Geometry\\Algebra_list.txt", true, Encoding.UTF8))
+            using (var geocr = new StreamWriter(path + "\\Geometry\\Algebra_list.txt", true, Encoding.UTF8))
             {
 
             }
@@ -101,6 +102,10 @@ public class Global
                 admlinecount++;
             }
         }
+    }
+    public void Testquestionsview()
+    {
+
     }
     public void Introduction()
     {
@@ -202,7 +207,7 @@ public class Global
         Console.WriteLine("Выбирите нужную функцию(Введите соответствующую цифру):\n" +
                           "1 - Добавить тест\n" +
                           "2 - Удалить тест\n" +
-                          "3 - Просмотр теста\n" +
+                          "3 - Просмотр теста и редактирование теста\n" +
                           "4 - Вывести список текущих тестов\n" +
                           "5 - К выбору предметов\n" +
                           "0 - Выйти из режима редактирования");
@@ -217,11 +222,13 @@ public class Global
         }
         else if(adm_func == "3")
         {
-
+            Testviewedit();
         }
         else if(adm_func == "4")
         {
             TestList();
+            Console.WriteLine("");
+            Adm();
         }
         else if (adm_func == "5")
         {
@@ -245,17 +252,38 @@ public class Global
         finaltestname = admlinecount + " - " + Testnameadd;
         using (var admadd = new StreamWriter(admpath + admlist,true,Encoding.UTF8))
         {
-            admadd.WriteLine(finaltestname);
-            File.Create(admpath + "\\" + finaltestname + ".txt").Close();
+            try
+            {
+                admadd.WriteLine(finaltestname);
+                File.Create(admpath + "\\" + finaltestname + ".txt").Close();
+                File.Create(admpath + "\\" + finaltestname + " - Ответы.txt").Close();
+                Console.WriteLine("Тест успешно создан");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Попробуйте ещё раз");
+            }
         }
+        Adm();
     }
     public void Admrem()
     {
 
     }
-    public void Testview()
+    public void Testviewedit()
     {
-
+        Console.WriteLine("Выберите нужный тест");
+        TestList();
+        admedit = Console.ReadLine();
+        using (var admListAlgebra = new StreamReader(admpath + admlist))
+        {
+            string linel;
+            while ((linel = admListAlgebra.ReadLine()) != null)
+            {
+                Console.WriteLine(linel);
+            }
+        }
     }
     public void TestList()
     {
@@ -267,7 +295,6 @@ public class Global
                 Console.WriteLine(linel);
             }
         }
-        Adm();
     }
     public void Select_lessonNum()
     {
