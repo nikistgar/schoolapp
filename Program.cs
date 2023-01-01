@@ -54,35 +54,23 @@ public class Global
         }
         if (!File.Exists(path + "\\Answers.txt"))
         {
-            try
+            using (var anscr = new StreamWriter(path + "\\Answers.txt", true, Encoding.UTF8))
             {
-                File.Create(path + "\\Answers.txt").Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+
             }
         }
         if (!File.Exists(path + "\\Algebra\\Algebra_list.txt"))
         {
-            try
+            using (var anscr = new StreamWriter(path + "\\Algebra\\Algebra_list.txt", true, Encoding.UTF8))
             {
-                File.Create(path + "\\Algebra\\Algebra_list.txt").Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+
             }
         }
-        if (!File.Exists(path + "\\Geometry\\Geometry_list.txt"))
+        if (!File.Exists(path + "\\Geometry\\Algebra_list.txt"))
         {
-            try
+            using (var anscr = new StreamWriter(path + "\\Geometry\\Algebra_list.txt", true, Encoding.UTF8))
             {
-                File.Create(path + "\\Geometry\\Geometry_list.txt").Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+
             }
         }
     }
@@ -124,7 +112,7 @@ public class Global
         Console.WriteLine("Введите свои данные одной строкой в формате Фамилия | Имя | Класс");
         try
         {
-            using (var student = new StreamWriter(path + "\\Answers.txt", true, Encoding.Default))
+            using (var student = new StreamWriter(path + "\\Answers.txt", true, Encoding.UTF8 ))
             {
                 Console.WriteLine(path);
                 name = Console.ReadLine();
@@ -255,7 +243,7 @@ public class Global
         Console.WriteLine("Введите название нового теста");
         Testnameadd = Console.ReadLine();
         finaltestname = admlinecount + " - " + Testnameadd;
-        using (var admadd = new StreamWriter(admpath + admlist,true,Encoding.Default))
+        using (var admadd = new StreamWriter(admpath + admlist,true,Encoding.UTF8))
         {
             admadd.WriteLine(finaltestname);
             File.Create(admpath + "\\" + finaltestname + ".txt").Close();
@@ -300,8 +288,8 @@ namespace Chezahuiny
     {
         static int Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.Default;
-            Console.InputEncoding = Encoding.Default;
+            Console.OutputEncoding = Encoding.GetEncoding(1251);
+            Console.InputEncoding = Encoding.GetEncoding(1251);
             Global lessons = new Global();
             lessons.Getpath();
             lessons.Directorieswf();
