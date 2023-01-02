@@ -23,8 +23,12 @@ public class Global
     private string admlesson;
     private string finaltestname;
     private string admedit;
+    private string admeditq;
     private string pass = "769151";
+    private string testselfinal;
     private int admlinecount;
+    private int testsel;
+    private int tempsel;
     public void Getpath()
     {
         path = Path.GetFullPath(".");
@@ -69,7 +73,7 @@ public class Global
         }
         if (!File.Exists(path + "\\Geometry\\Algebra_list.txt"))
         {
-            using (var geocr = new StreamWriter(path + "\\Geometry\\Algebra_list.txt", true, Encoding.UTF8))
+            using (var geocr = new StreamWriter(path + "\\Geometry\\Geometry_list.txt", true, Encoding.UTF8))
             {
 
             }
@@ -103,9 +107,45 @@ public class Global
             }
         }
     }
-    public void Testquestionsview()
+    public void Testselection(string test)
+    {
+        using (var testselection = new StreamReader(admpath + admlist))
+        {
+            testsel = Convert.ToInt32(test);
+            for (int i = 0; i < testsel; i++)
+            {
+                testselfinal = testselection.ReadLine();
+            }
+            Console.WriteLine("Выбран тест: " + testselfinal);
+        }
+    }
+    public void Testselectionq()
     {
 
+    }
+    public void Testquestionsanswersview()
+    {
+        try
+        {
+            using (var testedit1 = new StreamReader(admpath + "\\" + testselfinal + ".txt"))
+            using (var testedit2 = new StreamReader(admpath + "\\" + testselfinal + " - Ответы.txt"))
+            {
+                string linee1;
+                string linee2;
+                while ((linee1 = testedit1.ReadLine()) != null)
+                {
+                    int tempv = 1;
+                    linee2 = testedit2.ReadLine();
+                    Console.Write(tempv + ". " + linee1 + " - ");
+                    Console.WriteLine(linee2);
+                    tempv++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
     public void Introduction()
     {
@@ -276,14 +316,11 @@ public class Global
         Console.WriteLine("Выберите нужный тест");
         TestList();
         admedit = Console.ReadLine();
-        using (var admListAlgebra = new StreamReader(admpath + admlist))
-        {
-            string linel;
-            while ((linel = admListAlgebra.ReadLine()) != null)
-            {
-                Console.WriteLine(linel);
-            }
-        }
+        Testselection(admedit);
+        Testquestionsanswersview();
+        Console.WriteLine("Выберите вопрос для редактирования");
+        admeditq = Console.ReadLine();
+        
     }
     public void TestList()
     {
